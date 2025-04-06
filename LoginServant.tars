@@ -1,0 +1,29 @@
+#include "LoginProto.tars"
+#include "/home/tarsproto/XGame/Comm/JFGame.tars"
+
+/***
+* 登录系统接口
+*/
+module login
+{
+    interface LoginServant
+    {
+		//http请求处理接口
+		int doRequest(vector<byte> reqBuf, map<string, string> extraInfo, out vector<byte> rspBuf);
+
+		//tcp请求处理接口
+		int onRequest(long lUin, string sMsgPack, string sCurServrantAddr, JFGame::TClientParam stClientParam, JFGame::UserBaseInfoExt stUserBaseInfo);
+
+		//校验token
+		int checkLoginToken(CheckLoginTokenReq req, out CheckLoginTokenResp resp);
+
+		//账号注册
+		int Register(RegisterReq req, out RegisterResp resp);
+
+		//帐号退出
+		int Logout(UserLogoutReq req, out UserLogoutResp resp);
+
+		//状态更新通知
+		int UserState(long uid, int state);
+    };
+}; 

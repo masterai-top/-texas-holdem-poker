@@ -1,0 +1,283 @@
+/**
+**登录系统协议
+* 
+**/
+module login
+{
+    /*
+    // 游客登录
+    struct GuestLoginReq
+    {
+        0 optional long uid;    //用户ID
+    };
+
+    struct GuestLoginResp
+    {
+        0 optional string token;     //登录Token值
+    };
+
+    // 微信登录
+    struct WechatLoginReq
+    {
+        0 optional string wechatCode; //微信登录Code值
+        1 optional string deviceNo;   //设备号
+    };
+
+    struct WechatLoginResp
+    {
+        0 optional long    uid;     //用户ID
+        1 optional string  token;   //微信refresh_token
+    };
+
+    // 缓存登录
+    struct CacheLoginReq
+    {
+        0 optional long    uid;      //用户ID
+        1 optional string  deviceNo; //设备号
+        2 optional string  token;    //登录token值，即微信refresh_token
+    };
+
+    struct CacheLoginResp
+    {
+        0 optional string token;    //登录Token值，即微信refresh_token
+    };
+    */
+   
+    //用户登录类型
+    enum E_USER_LOGIN_TYPE
+    {
+        E_USER_LOGIN_TYPE_UNKNOWN = 0,  //未知
+        E_USER_LOGIN_TYPE_LOGIN   = 1,  //登录
+        E_USER_LOGIN_TYPE_LOGOUT  = 2,  //登出
+    };
+
+    // 登出
+    struct LogoutReq
+    {
+        0 optional long uid;    //用户ID
+    };
+
+    struct LogoutResp
+    {
+        0 optional int resultCode; //结果码
+    };
+
+    //Token验证
+    struct CheckLoginTokenReq
+    {
+        0 optional long   lUid;      //用户ID
+        1 optional string sToken;    //登录token值，即微信refresh_token
+        2 optional string sRemoteIP; //登录IP地址
+    };
+
+    struct CheckLoginTokenResp
+    {
+        0 require long   resultCode;  //操作结果
+        1 require string sHallId;     //最近所在的广场标识
+    };
+    
+    // 设备登录/游客登录
+    struct DeviceLoginReq
+    {
+        0 optional string deviceNo; //设备号
+    };
+
+    struct DeviceLoginResp
+    {
+        0 optional long     uid;        //用户ID
+        1 optional string   token;      //登录Token值
+    };
+
+    // 账号登录
+    struct UserLoginReq
+    {
+        0 optional string userName;  //账号
+        1 optional string passwd;    //密码
+    };
+
+    struct UserLoginResp
+    {
+        0 optional int resultCode;  //结果码
+        1 optional long uid;        //用户ID
+        2 optional string token;    //登录Token值
+    };
+
+    //平台类型
+    enum E_Platform_Type
+    {
+        E_PLATFORM_TYPE_UNKNOWN = 0,  //未知
+        E_PLATFORM_TYPE_IOS = 1,      //ios
+        E_PLATFORM_TYPE_ANDROID = 2,  //android
+        E_PLATFORM_TYPE_H5 = 3,       //h5
+    };
+
+    //渠道号
+    enum E_Channel_ID
+    {
+        E_CHANNEL_ID_UNKNOWN  = 0,   //未知
+        E_CHANNEL_ID_TEST     = 1,   //测试渠道
+        E_CHANNEL_ID_GOOGLE   = 2,   //google
+        E_CHANNEL_ID_FACEBOOK = 3,   //facebook
+        E_CHANNEL_ID_APPLE    = 4,   //apple
+    };
+
+    //登录类型
+    enum E_Login_Type
+    {
+        E_LOGIN_TYPE_GOOGLE   = 0, //google登录
+        E_LOGIN_TYPE_FACEBOOK = 1, //facebook登录
+        E_LOGIN_TYPE_APPLE    = 2, //apple登录
+    };
+
+    // 账号注册
+    struct RegisterReq
+    {
+        0 optional string          userName;    //账号
+        1 optional string          passwd;      //密码
+        2 optional string          deviceID;    //设备唯一码（android: imei, ios: idfa）
+        3 optional string          deviceType;  //机型信息
+        4 optional E_Platform_Type platform;    //平台类型
+        5 optional E_Channel_ID    channnelID;  //渠道号
+        6 optional int             isRobot;     //是否机器人，0--正常用户，1--机器人
+        7 optional int             areaID;      //所属区域ID
+        8 optional string          regIP;       //注册IP
+        9 optional string          nickName;    //昵称
+        10 optional string         sCountryID;  //国籍
+        11 optional string         language;    //系统语言
+    };
+
+    struct RegisterResp
+    {
+        0 optional int resultCode;  //结果码
+        1 optional long uid;        //用户ID
+    };
+
+    // 手机号登录
+    struct PhoneLoginReq
+    {
+        0 optional string phoneNo;  //手机账号
+        1 optional string msgCode;  //短信验证码
+        2 optional string deviceNo; //设备号
+        3 optional int    areaNo;   //设备号
+    };
+
+    struct PhoneLoginResp
+    {
+        0 optional long   uid;      //用户ID
+        1 optional string  token;   //登录Token值
+    };
+
+    // 发送手机验证码
+    struct SendPhoneMessageCodeReq
+    {
+        1 optional string phone; //手机号
+    };
+
+    struct SendPhoneMessageCodeResp
+    {
+        0 optional int resultCode; //结果码
+    };
+
+    // 绑定三方账号
+    struct BindThirdPartyAccountReq
+    {
+        0 require long    uid;             //用户id
+        1 require E_Login_Type accountType;//账号类型
+        2 require E_Channel_ID channnelID; //渠道号
+        3 require string openId;           //唯一识别码
+    };
+
+    struct BindThirdPartyAccountResp
+    {
+        0 require int resultCode; //结果码
+    };
+
+    //用户登出
+    struct UserLogoutReq
+    {
+        0 require long   uid;      //用户ID
+        1 require string sRemoteIP; //用户IP
+    };
+
+    struct UserLogoutResp
+    {
+        0 require long   resultCode;  //操作结果
+    };
+
+    /*
+    // 手机号缓存登录
+    struct CachePhoneLoginReq
+    {
+        0 optional long   uid;              //用户ID
+        1 optional string  phoneAccount;    //手机账号
+        2 optional string  deviceNo;        //设备号
+    };
+
+    struct CachePhoneLoginResp
+    {
+        0 optional long  uid;           //用户ID
+        1 optional string token;        //登录Token值
+    };
+
+    // 拉取设备登录列表
+    struct GetDeviceLoginListReq
+    {
+        0 optional string deviceNo;     //设备号
+    };
+
+    struct DeviceLogin
+    {
+        0 optional long    uid;             //用户ID
+        1 optional int     type;            //类型, 0:游客 1:手机号
+        2 optional string  phoneAccount;    //手机账号
+        3 optional string  deviceNo;        //设备号
+    };
+
+    struct GetDeviceLoginListResp
+    {
+        0 optional vector<DeviceLogin> DeviceLoginList;  //设备登录列表
+    };
+
+    // 删除用户账号
+    struct DeleteUserAccountReq
+    {
+        0 optional long    uid;            //用户id
+        1 optional string phoneAccount;   //手机号
+        2 optional string deviceNo;       //设备号
+    };
+
+    struct DeleteUserAccountResp
+    {
+        0 optional int resultCode;  //结果码
+    };
+
+    // 绑定手机号
+    struct BindPhoneReq
+    {
+        0 optional long    uid;        //用户id
+        1 optional string phone;      //手机号
+        2 optional string code;       //手机验证码
+        3 optional string password;   //密码
+        4 optional string deviceNo;   //设备号
+    };
+
+    struct BindPhoneResp
+    {
+        0 optional int resultCode; //结果码
+    };
+
+    // 修改手机号密码
+    struct ModifyPhonePasswordReq
+    {
+        0 optional string phone;      //手机号
+        1 optional string code;       //验证码
+        2 optional string newPassword;//新密码
+        3 optional string deviceNo;   //设备号
+    };
+
+    struct ModifyPhonePasswordResp
+    {
+        0 optional int resultCode; //结果码
+    };
+    */
+};
