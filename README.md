@@ -1,5 +1,5 @@
 德州俱乐部源代码，德州俱乐部中有联盟功能哦，德州扑克约局，私人局，俱乐部的各种原始资源哦，美术、代码都有的。比hhpoker、wpkr同类产品、质量更好。产品上线多年，服务器稳定，德州大厅有七八种德州玩法，短牌，大菠萝，MTT，SNG，AOF，奥马哈，以及支持联盟模式。
-Telegram联系： @alibabama401或E-mail：masterai918@gmail.com
+Telegram联系：@xuzongbin001或E-mail：masterai918@gmail.com
 
 
 ![微信图片_20241029191811 - 副本](https://github.com/user-attachments/assets/31da98f9-d812-4501-9756-d7e9efe08f12)
